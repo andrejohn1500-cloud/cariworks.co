@@ -1,1 +1,338 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CariWorks — DREs Apps | Caribbean Digital Solutions</title>
+<meta name="description" content="DREs Apps — Caribbean-built mobile apps for jobs, health, education and more."/>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --blue:#0A6EBD;--blue-dark:#084E8A;--blue-light:#E8F4FD;
+    --white:#FFFFFF;--gray:#F7F9FC;--text:#1A2332;--muted:#6B7A99;
+    --green:#00C48C;--gold:#F5A623;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(10,110,189,0.1);transition:.3s}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--blue),var(--blue-dark));border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px}
+  .logo-text{font-size:1.2rem;font-weight:700;color:var(--text)}
+  .logo-text span{color:var(--blue)}
+  nav ul{list-style:none;display:flex;gap:28px;align-items:center}
+  nav ul a{text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:500;transition:.2s}
+  nav ul a:hover{color:var(--blue)}
+  .nav-cta{background:var(--blue);color:#fff!important;padding:8px 18px;border-radius:20px;font-weight:600!important}
+  .nav-cta:hover{background:var(--blue-dark)!important;color:#fff!important}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+  .hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;padding:100px 5% 60px;background:linear-gradient(160deg,#f0f8ff 0%,#e8f4fd 40%,#fff 100%);position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(10,110,189,0.08),transparent 70%);pointer-events:none}
+  .hero::after{content:'';position:absolute;bottom:-50px;left:-50px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,196,140,0.06),transparent 70%);pointer-events:none}
+  .hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:60px;width:100%}
+  .hero-text{flex:1}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(10,110,189,0.1);color:var(--blue);padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:600;margin-bottom:24px}
+  .hero-badge::before{content:'🌴'}
+  h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;line-height:1.15;margin-bottom:20px}
+  h1 span{color:var(--blue)}
+  .hero-sub{font-size:1.05rem;color:var(--muted);line-height:1.7;margin-bottom:36px;max-width:480px}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{padding:13px 28px;border-radius:30px;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.25s;border:none}
+  .btn-primary{background:var(--blue);color:#fff;box-shadow:0 4px 20px rgba(10,110,189,0.3)}
+  .btn-primary:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 28px rgba(10,110,189,0.4)}
+  .btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}
+  .btn-outline:hover{background:var(--blue-light);transform:translateY(-2px)}
+  .hero-visual{flex:0 0 420px;display:flex;justify-content:center;align-items:center}
+  .phone-wrap{position:relative}
+  .phone{width:220px;height:440px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:36px;box-shadow:0 30px 70px rgba(10,110,189,0.35),0 0 0 8px rgba(255,255,255,0.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;position:relative;animation:float 4s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .phone-icon{width:70px;height:70px;background:rgba(255,255,255,0.15);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem}
+  .phone-text{color:#fff;font-size:.85rem;font-weight:600;opacity:.9;text-align:center;padding:0 16px}
+  .phone-dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 0 4px rgba(0,196,140,0.3)}
+  .badge-float{position:absolute;background:#fff;border-radius:14px;padding:8px 14px;box-shadow:0 8px 30px rgba(0,0,0,0.12);font-size:.75rem;font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .badge-float.b1{top:40px;left:-50px;animation:float 4s ease-in-out infinite 0.5s}
+  .badge-float.b2{bottom:60px;right:-55px;animation:float 4s ease-in-out infinite 1s}
+  .stats-row{display:flex;gap:32px;margin-top:44px}
+  .stat{text-align:center}
+  .stat-num{font-size:1.6rem;font-weight:800;color:var(--blue)}
+  .stat-label{font-size:.75rem;color:var(--muted);margin-top:2px}
+
+  /* SECTION SHARED */
+  section{padding:80px 5%}
+  .section-inner{max-width:1100px;margin:0 auto}
+  .section-tag{font-size:.78rem;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+  .section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:14px}
+  .section-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:520px}
+
+  /* APPS */
+  #apps{background:var(--gray)}
+  .apps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px;margin-top:48px}
+  .app-card{background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 20px rgba(0,0,0,0.06);transition:.3s;border:1px solid transparent;cursor:pointer;position:relative;overflow:hidden}
+  .app-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-accent,var(--blue));border-radius:3px 3px 0 0}
+  .app-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.12);border-color:rgba(10,110,189,0.1)}
+  .app-card-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:18px}
+  .app-card h3{font-size:1.15rem;font-weight:700;margin-bottom:8px}
+  .app-card p{font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:18px}
+  .app-badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px}
+  .badge-live{background:#e8faf3;color:#00a374}
+  .badge-soon{background:#fff3e0;color:#e07800}
+  .badge-dev{background:#e8f4fd;color:var(--blue)}
+  .app-links{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .app-link{font-size:.78rem;font-weight:600;color:var(--blue);text-decoration:none;padding:5px 12px;border:1.5px solid var(--blue);border-radius:20px;transition:.2s}
+  .app-link:hover{background:var(--blue);color:#fff}
+
+  /* ABOUT */
+  #about{background:#fff}
+  .about-inner{display:flex;gap:60px;align-items:center}
+  .about-text{flex:1}
+  .about-visual{flex:0 0 360px;display:flex;justify-content:center}
+  .island-card{background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:24px;padding:36px;color:#fff;text-align:center;width:300px;box-shadow:0 20px 60px rgba(10,110,189,0.3)}
+  .island-card .flag{font-size:3rem;margin-bottom:16px}
+  .island-card h3{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+  .island-card p{font-size:.88rem;opacity:.85;line-height:1.65}
+  .about-values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px}
+  .value{padding:16px;background:var(--blue-light);border-radius:14px}
+  .value-icon{font-size:1.3rem;margin-bottom:8px}
+  .value h4{font-size:.9rem;font-weight:700;margin-bottom:4px}
+  .value p{font-size:.8rem;color:var(--muted)}
+
+  /* CONTACT */
+  #contact{background:var(--gray)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:48px;align-items:start}
+  .contact-info h3{font-size:1.2rem;font-weight:700;margin-bottom:16px}
+  .contact-item{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding:14px;background:#fff;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+  .contact-icon{width:40px;height:40px;background:var(--blue-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+  .contact-item-text span{display:block;font-size:.73rem;color:var(--muted);margin-bottom:2px}
+  .contact-item-text a,.contact-item-text strong{font-size:.9rem;font-weight:600;color:var(--text);text-decoration:none}
+  .contact-item-text a:hover{color:var(--blue)}
+  .contact-form{background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 20px rgba(0,0,0,0.06)}
+  .contact-form h3{font-size:1.1rem;font-weight:700;margin-bottom:20px}
+  .form-group{margin-bottom:16px}
+  .form-group label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text)}
+  .form-group input,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid #e0e8f0;border-radius:10px;font-size:.9rem;font-family:inherit;transition:.2s;outline:none;resize:vertical}
+  .form-group input:focus,.form-group textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(10,110,189,0.1)}
+  .form-group textarea{min-height:100px}
+  .form-btn{width:100%;padding:12px;background:var(--blue);color:#fff;border:none;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .form-btn:hover{background:var(--blue-dark)}
+  #form-msg{margin-top:12px;font-size:.85rem;text-align:center;font-weight:600;display:none}
+
+  /* FOOTER */
+  footer{background:var(--text);color:#fff;padding:40px 5% 24px}
+  .footer-inner{max-width:1100px;margin:0 auto}
+  .footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.1)}
+  .footer-logo{display:flex;align-items:center;gap:10px}
+  .footer-logo-icon{width:36px;height:36px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .footer-logo-text{font-weight:700;font-size:1rem}
+  .footer-logo-text span{color:var(--blue)}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+  .footer-links a{color:rgba(255,255,255,0.6);font-size:.85rem;text-decoration:none;transition:.2s}
+  .footer-links a:hover{color:#fff}
+  .footer-bottom{padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .footer-bottom p{font-size:.8rem;color:rgba(255,255,255,0.45)}
+  .footer-flag{font-size:1.2rem}
+
+  /* SCROLL REVEAL */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* MOBILE NAV */
+  .mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:#fff;z-index:99;padding:20px 5%;box-shadow:0 8px 30px rgba(0,0,0,0.1);flex-direction:column;gap:16px}
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{color:var(--text);text-decoration:none;font-weight:500;font-size:1rem;padding:8px 0;border-bottom:1px solid #f0f0f0}
+
+  @media(max-width:900px){
+    .hero-inner{flex-direction:column;text-align:center}
+    .hero-sub{margin:0 auto 36px}
+    .btn-row{justify-content:center}
+    .stats-row{justify-content:center}
+    .hero-visual{order:-1}
+    .badge-float.b1{left:-30px}
+    .badge-float.b2{right:-30px}
+    .about-inner{flex-direction:column}
+    .about-visual{order:-1}
+    .contact-grid{grid-template-columns:1fr}
+    nav ul{display:none}
+    .hamburger{display:flex}
+    .footer-top{flex-direction:column;align-items:flex-start}
+  }
+  @media(max-width:500px){
+    .hero-visual{display:none}
+    .about-values{grid-template-columns:1fr}
+    .island-card{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="logo" href="#">
+    <div class="logo-icon">D</div>
+    <span class="logo-text">Cari<span>Works</span></span>
+  </a>
+  <ul>
+    <li><a href="#apps">Apps</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+  <div class="hamburger" id="ham" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#apps" onclick="toggleMenu()">Apps</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">Caribbean-Built Digital Solutions</div>
+      <h1>Apps Built for the<br/><span>Caribbean &amp; Beyond</span></h1>
+      <p class="hero-sub">DREs Apps creates powerful, affordable mobile apps for everyday Caribbean life — from education and health to jobs and business.</p>
+      <div class="btn-row">
+        <a href="#apps" class="btn btn-primary">🚀 Explore Our Apps</a>
+        <a href="#about" class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num">4+</div><div class="stat-label">Apps Built</div></div>
+        <div class="stat"><div class="stat-num">SVG</div><div class="stat-label">Caribbean HQ</div></div>
+        <div class="stat"><div class="stat-num">Free</div><div class="stat-label">Core Features</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-icon">📱</div>
+          <div class="phone-text">DREs Apps<br/>Caribbean Digital</div>
+          <div class="phone-dot"></div>
+        </div>
+        <div class="badge-float b1">🎓 Dres Quiz — Live</div>
+        <div class="badge-float b2">💼 CariWorks — Coming Soon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPS -->
+<section id="apps">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-tag">Our Products</p>
+      <h2 class="section-title">Apps for Caribbean Life</h2>
+      <p class="section-sub">Every app we build solves a real problem for real people in the Caribbean — built with care, from the islands.</p>
+    </div>
+    <div class="apps-grid">
+
+      <div class="app-card reveal" style="--card-accent:#F5A623">
+        <div class="app-card-icon" style="background:#fff8e1">🎓</div>
+        <h3>Dres Quiz</h3>
+        <p>Caribbean CXC exam prep quiz app with 16 categories, 20 levels, and thousands of questions. Built for CSEC students across the region.</p>
+        <div><span class="app-badge badge-live">✅ Live Now</span></div>
+        <div class="app-links">
+          <a href="https://apkpure.com" target="_blank" class="app-link">APKPure</a>
+          <a href="#contact" class="app-link">Privacy Policy</a>
+        </div>
+      </div>
+
+      <div class="app-card reveal" style="--card-accent:#0A6EBD">
+        <div class="app-card-icon" style="background:#e8f4fd">💼</div>
+        <h3>CariWorks</h3>
+        <p>The Caribbean jobs & gigs platform. Connect employers with talent across SVG, Barbados, Trinidad, Jamaica and the wider Caribbean.</p>
+        <div><span class="app-badge badge-soon">🔜 Coming Soon</span></div>
+        <div class="app-links">
+          <a href="#contact" class="app-link">Get Notified</a>
+        </div>
+      </div>
+
+      <div class="app-card reveal" style="--card-accent:#9C27B0">
+        <div class="app-card-icon" style="background:#f3e5f5">🛒</div>
+        <h3>CariMart</h3>
+        <p>Caribbean marketplace app for buying, selling, and discovering local products and services across the islands. Your regional marketplace.</p>
+        <div><span class="app-badge badge-soon">🔜 Coming Soon</span></div>
+        <div class="app-links">
+          <a href="#contact" class="app-link">Get Notified</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-inner">
+      <div class="about-text reveal">
+        <p class="section-tag">Our Story</p>
+        <h2 class="section-title">Built in the Caribbean,<br/>Built for the Caribbean</h2>
+        <p style="color:var(--muted);line-height:1.75;margin-bottom:24px">DREs Apps was founded in St. Vincent and the Grenadines with one mission: build world-class mobile apps that serve the Caribbean community. Every feature, every design decision, every line of code is made with Caribbean people in mind.</p>
+        <p style="color:var(--muted);line-height:1.75;margin-bottom:32px">From CXC students studying for exams to job seekers looking for work, we build the tools that our region needs — affordable, reliable, and built with pride.</p>
+        <div class="about-values">
+          <div class="value"><div class="value-icon">🌴</div><h4>Caribbean First</h4><p>Every app designed for our culture and needs</p></div>
+          <div class="value"><div class="value-icon">⚡</div><h4>Fast &amp; Reliable</h4><p>Optimized for Caribbean networks and devices</p></div>
+          <div class="value"><div class="value-icon">💰</div><h4>Affordable</h4><p>Free core features, fair premium pricing</p></div>
+          <div class="value"><div class="value-icon">🔒</div><h4>Private &amp; Secure</h4><p>Your data stays yours, always</p></div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="island-card">
+          <div class="flag">🇻🇨</div>
+          <h3>St. Vincent &amp;<br/>the Grenadines</h3>
+          <p>Proud to be a Caribbean developer putting our islands on the global tech map. Building apps the world will use, from the heart of SVG.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-tag">Get In Touch</p>
+      <h2 class="section-title">Let's Connect</h2>
+      <p class="section-sub">Have a question, partnership idea, or want to be notified when a new app launches? Reach out!</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <h3>Contact DREs Apps</h3>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div class="contact-item-text"><span>Email</span><a href="mailto:andrejohn1500@gmail.com">andrejohn1500@gmail.com</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-text"><span>Location</span><strong>St. Vincent &amp; the Grenadines 🇻🇨</strong></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🎵</div>
+          <div class="contact-item-text"><span>TikTok</span><a href="https://tiktok.com/@dresapps" target="_blank">@dresapps</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💻</div>
+          <div class="contact-item-text"><span>GitHub</span><a href="https://github.com/andrejohn1500-cloud" target="_blank">andrejohn1500-cloud</a></div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <h3>Send a Message</h3>
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="fname" placeholder="e.g. John Smith"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="femail" placeholder="your@email.com"/>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="fmsg" placeholder="Tell us what's on your mind..."></textarea>
+        </div>
+        <button class="form-btn" onclick="sendMsg()">✉️ Sen
